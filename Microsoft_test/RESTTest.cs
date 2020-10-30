@@ -23,38 +23,44 @@ namespace Microsoft_test
          
             bool check = true;
 
-            WebRequest request = WebRequest.Create(TestSettings.REST_GET_url);
-            WebResponse response = request.GetResponse();
-
-            using (StreamReader stream = new StreamReader(response.GetResponseStream()))
+            for (int i = 0; i < 2; i++)
             {
-                string line;
-                
 
-                if ((line = stream.ReadLine()) != null)
+                WebRequest request = WebRequest.Create(TestSettings.REST_GET_url[i]);
+                WebResponse response = request.GetResponse();
+
+                using (StreamReader stream = new StreamReader(response.GetResponseStream()))
                 {
-                  
-                    var translation = JsonConvert.DeserializeObject<Rootobject>(line);
-                    string c_line = translation.results[2].title;
-                    check = Preference.Contains(c_line, "LINQ", StringComparison.OrdinalIgnoreCase);
+                    string line;
 
-                    if (check == false)
+
+                    if ((line = stream.ReadLine()) != null)
+                    {
+
+                        var translation = JsonConvert.DeserializeObject<Rootobject>(line);
+                        for (int j = 0; j < 25; j++)
+                        {
+                            string c_line = translation.results[j].title;
+                            check = Preference.Contains(c_line, "LINQ", StringComparison.OrdinalIgnoreCase);
+
+                            if (check == false)
+                                return false;
+                        }
+
+
+                    }
+                    else
                         return false;
-
                 }
-                else
-                    return false;
+            }
 
                 return true;
-            }
         }
-
+        
         [Test]
-
         public void Test_for_search_rest()
         {
             Assert.IsTrue(TranslateText());
         }
-
     }
 }

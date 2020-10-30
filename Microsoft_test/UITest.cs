@@ -15,12 +15,10 @@ namespace Microsoft_test
         [Test]
         public void Test_for_search()
         {
-
             var main_menu = new MainMenuPageObject(_driver);
 
            Assert.IsTrue(main_menu.Navigate_to_search());
-
-
         }
+
     }
 }

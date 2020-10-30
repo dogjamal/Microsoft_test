@@ -16,8 +16,6 @@ namespace Microsoft_test
 
         String result = "";
 
-
-
         public MainMenuPageObject(IWebDriver driver)
         {
             _driver = driver;
@@ -26,7 +24,9 @@ namespace Microsoft_test
         public bool Navigate_to_search()
         {
             bool check = true;
+
             _driver.FindElement(_search).SendKeys("LINQ" + OpenQA.Selenium.Keys.Enter);
+
             for (int i = 0; i < 5; i++)
             {
                 for (int j = 0; j < 10; j++)
@@ -41,9 +41,8 @@ namespace Microsoft_test
                 }
 
                 _driver.FindElement(_next_page).Click();
-
-            }
-           
+            }  
+            
             return true;
         }
           
